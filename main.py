@@ -596,15 +596,15 @@ with open(results_files_path + "/results.txt", 'w') as results_file:
                 if ovmax != -1:
                     color = light_red
                     if status == "INSUFFICIENT OVERLAP":
-                        text = "IoU: {0:.2f}% ".format(ovmax*100) + "< {0:.2f}% ".format(min_overlap*100)
+                        text = "IoU: {0:.5f}% ".format(ovmax*100) + "< {0:.5f}% ".format(min_overlap*100)
                     else:
-                        text = "IoU: {0:.2f}% ".format(ovmax*100) + ">= {0:.2f}% ".format(min_overlap*100)
+                        text = "IoU: {0:.5f}% ".format(ovmax*100) + ">= {0:.5f}% ".format(min_overlap*100)
                         color = green
                     img, _ = draw_text_in_image(img, text, (margin + line_width, v_pos), color, line_width)
                 # 2nd line
                 v_pos += int(bottom_border / 2.0)
                 rank_pos = str(idx+1) # rank position (idx starts at 0)
-                text = "Prediction #rank: " + rank_pos + " confidence: {0:.2f}% ".format(float(prediction["confidence"])*100)
+                text = "Prediction #rank: " + rank_pos + " confidence: {0:.5f}% ".format(float(prediction["confidence"])*100)
                 img, line_width = draw_text_in_image(img, text, (margin, v_pos), white, 0)
                 color = light_red
                 if status == "MATCH!":
@@ -653,12 +653,12 @@ with open(results_files_path + "/results.txt", 'w') as results_file:
 
         ap, mrec, mprec = voc_ap(rec[:], prec[:])
         sum_AP += ap
-        text = "{0:.2f}%".format(ap*100) + " = " + class_name + " AP " #class_name + " AP = {0:.2f}%".format(ap*100)
+        text = "{0:.5f}%".format(ap*100) + " = " + class_name + " AP " #class_name + " AP = {0:.2f}%".format(ap*100)
         """
          Write to results.txt
         """
-        rounded_prec = [ '%.2f' % elem for elem in prec ]
-        rounded_rec = [ '%.2f' % elem for elem in rec ]
+        rounded_prec = [ '%.5f' % elem for elem in prec ]
+        rounded_rec = [ '%.5f' % elem for elem in rec ]
         results_file.write(text + "\n Precision: " + str(rounded_prec) + "\n Recall :" + str(rounded_rec) + "\n\n")
         if not args.quiet:
             print(text)
@@ -704,7 +704,7 @@ with open(results_files_path + "/results.txt", 'w') as results_file:
 
     results_file.write("\n# mAP of all classes\n")
     mAP = sum_AP / n_classes
-    text = "mAP = {0:.2f}%".format(mAP*100)
+    text = "mAP = {0:.5f}%".format(mAP*100)
     results_file.write(text + "\n")
     print(text)
 
@@ -842,7 +842,7 @@ if draw_plot:
 """
 if draw_plot:
     window_title = "mAP"
-    plot_title = "mAP = {0:.2f}%".format(mAP*100)
+    plot_title = "mAP = {0:.5f}%".format(mAP*100)
     x_label = "Average Precision"
     output_path = results_files_path + "/mAP.png"
     to_show = True
